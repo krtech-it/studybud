@@ -1,0 +1,35 @@
+
+    {% for message in messages_room %}
+    <div class="activities__box">
+        <div class="activities__boxHeader roomListRoom__header">
+          <a href="{% url 'user-profile' message.user.id %}" class="roomListRoom__author">
+            <div class="avatar avatar--small">
+              <img src="{{message.user.avatar.url}}" />
+            </div>
+            <p>
+              @{{message.user.username}}
+              <span>{{message.created|timesince}} ago</span>
+            </p>
+          </a>
+          {% if message.user.id == request.user.id %}
+          <div class="roomListRoom__actions">
+            <a href="{% url 'delete-message' message.id %}?next=home">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                  <title>удалить</title>
+                  <path d="M30 4h-8v-3c0-0.553-0.447-1-1-1h-10c-0.553 0-1 0.447-1 1v3h-8v2h2v24c0 1.104 0.897 2 2 2h20c1.103 0 2-0.896 2-2v-24h2v-2h-0zM12 2h8v2h-8v-2zM26.002 30l-0.002 1v-1h-20v-24h20v24h0.002z">
+                  </path>
+              </svg>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+        <div class="activities__boxContent">
+          <p>replied to post “<a href="{% url 'room' message.room.id %}">{{message.room.name}}</a>”</p>
+          <div class="activities__boxRoomContent">
+            {{message}}
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
